@@ -1,0 +1,35 @@
+{
+  "name": "thinksvip/xc-auth",
+  "description": "xc-auth, yii2",
+  "minimum-stability": "dev",
+  "extra":{
+    "branch-alias":{
+      "dev-mian":"1.0.x-dev"
+    }
+  },
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Smiler",
+      "email": "smilerliu@sz2k.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*",
+    "ext-zlib": "*",
+    "firebase/php-jwt": "^6.4",
+    "yiisoft/yii2-redis": "~2.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xc\\Auth\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": false
+    }
+  }
+}
