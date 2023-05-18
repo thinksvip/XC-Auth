@@ -185,7 +185,7 @@ class Redis extends Instance
     {
         if ($this->isEncryption) {
             $value = json_encode($value);
-            $value = gzcompress($value);
+//            $value = gzcompress($value);
         }
         return $value;
     }
@@ -198,7 +198,7 @@ class Redis extends Instance
     private function decodeValue($value)
     {
         if ($this->isEncryption && $value) {
-            $value = gzuncompress($value);
+//            $value = gzuncompress($value);
             $value = json_decode($value, true);
         }
         return $value;
