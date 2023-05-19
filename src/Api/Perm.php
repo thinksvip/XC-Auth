@@ -3,6 +3,7 @@
 namespace Xc\Auth\Api;
 
 use Xc\Auth\Api\Perm\Data;
+use Xc\Auth\Exp\XcAuthErrorCode;
 use Xc\Auth\Exp\XcAuthException;
 use Xc\Auth\Units\ApiAbstract;
 
@@ -33,7 +34,7 @@ class Perm extends ApiAbstract
 
             return self::$perms[$key];
         } catch (\Exception $e) {
-            throw new XcAuthException("未定义类($class)");
+            throw new XcAuthException(XcAuthErrorCode::ERROR_VERIFY_TIP, "未定义类($class)");
         }
     }
 

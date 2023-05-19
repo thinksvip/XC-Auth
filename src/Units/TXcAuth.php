@@ -5,6 +5,7 @@ namespace Xc\Auth\Units;
 use Xc\Auth\Api\Login;
 use Xc\Auth\Api\Perm;
 use Xc\Auth\Api\User;
+use Xc\Auth\Exp\XcAuthErrorCode;
 use Xc\Auth\Exp\XcAuthException;
 
 /**
@@ -31,7 +32,7 @@ trait TXcAuth
 
             return self::$objects[$key];
         } catch (\Exception $e) {
-            throw new XcAuthException("未定义类($class)");
+            throw new XcAuthException(XcAuthErrorCode::ERROR_VERIFY_TIP, "未定义类($class)");
         }
     }
 }

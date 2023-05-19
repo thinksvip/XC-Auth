@@ -2,6 +2,7 @@
 
 namespace Xc\Auth\Units\Struct;
 
+use Xc\Auth\Exp\XcAuthErrorCode;
 use Xc\Auth\Exp\XcAuthException;
 
 /**
@@ -29,7 +30,7 @@ class TokenStruct
         $this->uid = $params['user_id'] ?? null;
 
         if (empty($this->tid) || empty($this->uid)) {
-            throw new XcAuthException('token解析失败');
+            throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_PARSE_ERROR);
         }
     }
 }

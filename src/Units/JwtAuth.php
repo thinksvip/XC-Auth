@@ -6,6 +6,7 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\SignatureInvalidException;
+use Xc\Auth\Exp\XcAuthErrorCode;
 use Xc\Auth\Exp\XcAuthException;
 use Xc\Auth\Units\Instance;
 
@@ -98,15 +99,15 @@ class JwtAuth extends Instance
         try {
             $decode = JWT::decode($token, new Key($this->_key, $this->_alg));
         } catch (SignatureInvalidException $e) {
-            throw new XcAuthException('token验证失败');
+            throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_SIGNATURE_INVALID);
         } catch (ExpiredException $e) {
-            throw new XcAuthException('token已过期');
+            throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_EXPIRED);
         } catch (\Exception $e) {
-            throw new XcAuthException('token无效');
+            throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_NULL);
         }
 
         if ($decode->type != $this->_type) {
-            throw new XcAuthException('token无效');
+            throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_TYPE_ERROR);
         }
 
         $this->_decode = $decode;

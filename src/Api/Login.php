@@ -2,6 +2,8 @@
 
 namespace Xc\Auth\Api;
 
+use Xc\Auth\Exp\XcAuthErrorCode;
+use Xc\Auth\Exp\XcAuthException;
 use Xc\Auth\Units\ApiAbstract;
 use Xc\Auth\Units\Redis;
 use Yii;
@@ -30,6 +32,9 @@ class Login extends ApiAbstract
         $value = Redis::getInstance()->get($key);
 
         !empty($value) && $bool = true;
+        if (!$bool) {
+            throw new XcAuthException(XcAuthErrorCode::NO_LOGIN);
+        }
 
         return $bool ?? false;
     }

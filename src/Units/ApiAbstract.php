@@ -2,6 +2,7 @@
 
 namespace Xc\Auth\Units;
 
+use Xc\Auth\Exp\XcAuthErrorCode;
 use Xc\Auth\Exp\XcAuthException;
 use Xc\Auth\Units\Struct\TokenStruct;
 
@@ -69,13 +70,13 @@ abstract class ApiAbstract
             $header = \Yii::$app->request->getHeaders();
             $token = $header['Authorization'] ?? '';
             if (empty($token) || $token === null) {
-                throw new XcAuthException('获取token失败');
+                throw new XcAuthException(XcAuthErrorCode::NO_LOGIN);
             }
 
             $tokenTypeLength = strlen($this->tokenType);
 
             if (strcasecmp(substr($token, 0, $tokenTypeLength), $this->tokenType) !== 0) {
-                throw new XcAuthException('token类型无效');
+                throw new XcAuthException(XcAuthErrorCode::OAUTH_TOKEN_TYPE_ERROR);
             }
             $this->token = substr($token, $tokenTypeLength + 1);
         } else {
