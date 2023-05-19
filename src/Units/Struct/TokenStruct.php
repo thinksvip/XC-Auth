@@ -30,6 +30,8 @@ class TokenStruct
      */
     public $loginType;
 
+    protected array $params = [];
+
     public function __construct(array $params)
     {
         $this->tid = $params['tenant_id'] ?? null;
@@ -39,5 +41,16 @@ class TokenStruct
         if (empty($this->tid) || empty($this->uid)) {
             throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_PARSE_ERROR);
         }
+
+        $this->params = $params;
+    }
+
+    /**
+     * 获取token中的附加参数
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
     }
 }

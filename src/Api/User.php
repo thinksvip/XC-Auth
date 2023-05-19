@@ -25,7 +25,7 @@ class User extends ApiAbstract
     public function getAllUsers()
     {
         $key = $this->getCrKey(__FUNCTION__);
-        $allUsers = Redis::getInstance()->hgetall($key);
+        $allUsers = self::redis()->hgetall($key);
         return $allUsers;
     }
 
@@ -37,7 +37,7 @@ class User extends ApiAbstract
     public function getSingleUser($uid)
     {
         $key = $this->getCrKey('getAllUsers');
-        $user = Redis::getInstance()->hget($key, $uid);
+        $user = self::redis()->hget($key, $uid);
         return $user;
     }
 }

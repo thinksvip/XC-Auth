@@ -29,6 +29,8 @@ class Redis extends Instance
      */
     protected $isEncryption = true;
 
+    protected $isGz = false;
+
     /**
      * @param bool $isEncryption
      * @return Redis
@@ -36,6 +38,17 @@ class Redis extends Instance
     public function setIsEncryption(bool $isEncryption): Redis
     {
         $this->isEncryption = $isEncryption;
+        return $this;
+    }
+
+    /**
+     * 设置是否压缩数据
+     * @param bool $isGz
+     * @return Redis
+     */
+    public function setIsGz(bool $isGz): Redis
+    {
+        $this->isGz = $isGz;
         return $this;
     }
 
@@ -129,6 +142,24 @@ class Redis extends Instance
     }
 
     /**
+     * 设置hash key-value(不存在即设置)
+     * @param string $hKey
+     * @param $key
+     * @param $value
+     * @param $expire
+     * @return bool
+     */
+    public function hsetnx(string $hKey, $key, $value, $expire = 0)
+    {
+        $value = $this->encodeValue($value);
+        $r[] = $this->redis->hsetnx($hKey, $key, $value);
+        if ($expire) {
+            $r[] = $this->redis->expire($hKey, $expire);
+        }
+        return self::checkBack($r);
+    }
+
+    /**
      * 获取all hash key-value
      * @param $hKey
      * @param bool $is_encryption 是否加密
@@ -185,7 +216,7 @@ class Redis extends Instance
     {
         if ($this->isEncryption) {
             $value = json_encode($value);
-//            $value = gzcompress($value);
+            $this->isGz && $value = gzcompress($value);
         }
         return $value;
     }
@@ -198,7 +229,7 @@ class Redis extends Instance
     private function decodeValue($value)
     {
         if ($this->isEncryption && $value) {
-//            $value = gzuncompress($value);
+            $this->isGz && $value = gzuncompress($value);
             $value = json_decode($value, true);
         }
         return $value;

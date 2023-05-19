@@ -31,7 +31,7 @@ class Data extends ApiAbstract implements IPerm
     {
         $key = $this->getCrKey($this->setKey(), [$this->ts->tid, $this->ts->uid]);
 
-        $data = Redis::getInstance()->get($key);
+        $data = self::redisGz()->get($key);
         return $data;
     }
 }

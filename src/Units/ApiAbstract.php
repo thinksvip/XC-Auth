@@ -28,7 +28,7 @@ abstract class ApiAbstract
 
         $params = JwtAuth::getInstance()->decode($this->token)->getParams();
         $this->ts = new TokenStruct($params);
-        
+
         $this->setCrKey();
     }
 
@@ -91,5 +91,32 @@ abstract class ApiAbstract
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * 返回redis对象
+     * @return Redis
+     */
+    protected static function redis()
+    {
+        return Redis::getInstance();
+    }
+
+    /**
+     * 返回redis对象-json数据
+     * @return Redis
+     */
+    protected static function redisEncry()
+    {
+        return self::redis()->setIsEncryption(true);
+    }
+
+    /**
+     * 返回redis对象-压缩数据
+     * @return Redis
+     */
+    protected static function redisGz()
+    {
+        return self::redisEncry()->setIsEncryption(true)->setIsGz(true);
     }
 }

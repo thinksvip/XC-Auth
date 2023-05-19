@@ -29,9 +29,11 @@ class Login extends ApiAbstract
     {
         $ident = $this->ts->uid . '-' . md5(Yii::$app->request->getUserIP() . Yii::$app->request->getUserAgent());
         $key = $this->getCrKey(__FUNCTION__, [$this->ts->tid, $ident]);
-        $value = Redis::getInstance()->get($key);
 
-        !empty($value) && $bool = true;
+        $value = self::redisGz()->get($key);
+
+        $bool = !empty($value) ? true : false;
+
         if (!$bool) {
             throw new XcAuthException(XcAuthErrorCode::NO_LOGIN);
         }
@@ -47,18 +49,18 @@ class Login extends ApiAbstract
     {
         $key = $this->getCrKey(__FUNCTION__, [md5($this->token)]);
 
-        $userinfo = Redis::getInstance()->get($key);
+        $userinfo = self::redisGz()->get($key);
 
         return $userinfo ?? [];
     }
 
     /**
      * 获取token中的附加参数
-     * @return \Xc\Auth\Units\Struct\TokenStruct
+     * @return array
      */
     public function getTokenParams()
     {
-        return $this->ts;
+        return $this->ts->getParams();
     }
 
     /**
