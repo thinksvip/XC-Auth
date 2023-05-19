@@ -178,8 +178,8 @@ class Redis extends Instance
                 $data[] = $item;
             }
         }
-        array_walk($data, function ($value) {
-            return $this->decodeValue($value);
+        array_walk($data, function (&$value) {
+            $value = $this->decodeValue($value);
         });
 
         return $data;
