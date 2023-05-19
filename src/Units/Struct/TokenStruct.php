@@ -24,10 +24,17 @@ class TokenStruct
      */
     public $uid;
 
+    /**
+     * 登录类型
+     * @var int|mixed
+     */
+    public $loginType;
+
     public function __construct(array $params)
     {
         $this->tid = $params['tenant_id'] ?? null;
         $this->uid = $params['user_id'] ?? null;
+        $this->loginType = $params['login_type'] ?? 1;
 
         if (empty($this->tid) || empty($this->uid)) {
             throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_PARSE_ERROR);

@@ -60,4 +60,31 @@ class Login extends ApiAbstract
     {
         return $this->ts;
     }
+
+    /**
+     * 获取登录用户id
+     * @return mixed|null
+     */
+    public function getUserId()
+    {
+        return $this->ts->uid;
+    }
+
+    /**
+     * 获取登录租户id
+     * @return mixed|null
+     */
+    public function getTenantId()
+    {
+        return $this->ts->tid;
+    }
+
+    /**
+     * 获取登录类型
+     * @return int|mixed
+     */
+    public function getLoginType()
+    {
+        return $this->ts->loginType;
+    }
 }
