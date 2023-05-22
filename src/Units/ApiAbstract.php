@@ -99,7 +99,7 @@ abstract class ApiAbstract
      */
     protected static function redis()
     {
-        return Redis::getInstance();
+        return Redis::getInstance()->setIsEncryption(true)->setIsGz(false);
     }
 
     /**
@@ -108,7 +108,7 @@ abstract class ApiAbstract
      */
     protected static function redisEncry()
     {
-        return self::redis()->setIsEncryption(true);
+        return self::redis()->setIsEncryption(true)->setIsGz(false);
     }
 
     /**
