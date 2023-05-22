@@ -53,4 +53,13 @@ class TokenStruct
     {
         return $this->params;
     }
+
+    /**
+     * 获取租户id和用户id
+     * @return array
+     */
+    public function listTenantIdAndUserId()
+    {
+        return [$this->tid, $this->uid];
+    }
 }

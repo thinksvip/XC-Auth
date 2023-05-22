@@ -11,12 +11,6 @@ namespace Xc\Auth\Api\Perm;
 interface IPerm
 {
     /**
-     * 设置key
-     * @return string
-     */
-    public function setKey(): string;
-
-    /**
      * 获取
      * @return mixed
      */

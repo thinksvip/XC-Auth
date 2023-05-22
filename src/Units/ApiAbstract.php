@@ -16,8 +16,6 @@ abstract class ApiAbstract
 {
     protected string $token;
 
-    protected array $crKey;
-
     protected string $tokenType = 'Bearer';
 
     protected TokenStruct $ts;// token数据结构
@@ -28,8 +26,6 @@ abstract class ApiAbstract
 
         $params = JwtAuth::getInstance()->decode($this->token)->getParams();
         $this->ts = new TokenStruct($params);
-
-        $this->setCrKey();
     }
 
     /**
@@ -39,15 +35,6 @@ abstract class ApiAbstract
     abstract protected function init();
 
     /**
-     * 设置key
-     * @return void
-     */
-    private function setCrKey()
-    {
-        $this->crKey = \Yii::$app->params['redis_key'] ?? [];
-    }
-
-    /**
      * 获取指定key
      * @param string $key
      * @param array $params
@@ -55,8 +42,7 @@ abstract class ApiAbstract
      */
     protected function getCrKey(string $key, array $params = [])
     {
-        $key = 'auth' . ucfirst($key);
-        return vsprintf($this->crKey[$key] ?? '', $params);
+        return vsprintf('auth:' . $key, $params);
     }
 
     /**

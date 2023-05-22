@@ -18,18 +18,13 @@ class Data extends ApiAbstract implements IPerm
         // TODO: Implement init() method.
     }
 
-    public function setKey(): string
-    {
-        return 'getPermissionData';
-    }
-
     /**
      * 获取数据
      * @return mixed
      */
     public function get()
     {
-        $key = $this->getCrKey($this->setKey(), [$this->ts->tid, $this->ts->uid]);
+        $key = $this->getCrKey('permission:data:%s:%s', $this->ts->listTenantIdAndUserId());
 
         $data = self::redisGz()->get($key);
         return $data;

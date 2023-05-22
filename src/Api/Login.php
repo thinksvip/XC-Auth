@@ -28,7 +28,7 @@ class Login extends ApiAbstract
     public function isLogin(): bool
     {
         $ident = $this->ts->uid . '-' . md5(Yii::$app->request->getUserIP() . Yii::$app->request->getUserAgent());
-        $key = $this->getCrKey(__FUNCTION__, [$this->ts->tid, $ident]);
+        $key = $this->getCrKey('user:login_status:%s:%s', [$this->ts->tid, $ident]);
 
         $value = self::redisGz()->get($key);
 
@@ -47,7 +47,7 @@ class Login extends ApiAbstract
      */
     public function getLoginUserinfo()
     {
-        $key = $this->getCrKey(__FUNCTION__, [md5($this->token)]);
+        $key = $this->getCrKey('user:access_token:%s', [md5($this->token)]);
 
         $userinfo = self::redisGz()->get($key);
 
