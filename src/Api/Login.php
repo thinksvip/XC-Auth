@@ -5,7 +5,6 @@ namespace Xc\Auth\Api;
 use Xc\Auth\Exp\XcAuthErrorCode;
 use Xc\Auth\Exp\XcAuthException;
 use Xc\Auth\Units\ApiAbstract;
-use Xc\Auth\Units\Redis;
 use Yii;
 
 /**
@@ -42,7 +41,7 @@ class Login extends ApiAbstract
     }
 
     /**
-     * 获取登录用户信息
+     * 获取登录用户信息，包含基础信息、角色、部门、企业等 信息
      * @return array
      */
     public function getLoginUserinfo()
@@ -88,5 +87,60 @@ class Login extends ApiAbstract
     public function getLoginType()
     {
         return $this->ts->loginType;
+    }
+
+    /**
+     * 获取登录用户企业信息
+     * @return array|mixed
+     */
+    public function getLoginTenantInfo()
+    {
+        $userinfo = $this->getLoginUserinfo();
+
+        return $userinfo['tenant'] ?? [];
+    }
+
+    /**
+     * 获取登录用户基础信息
+     * @return array|mixed
+     */
+    public function getLoginUserBaseInfo()
+    {
+        $userinfo = $this->getLoginUserinfo();
+
+        return $userinfo['userinfo'] ?? [];
+    }
+
+    /**
+     * 获取登录用户角色列表
+     * @return mixed
+     */
+    public function getLoginUserRoles()
+    {
+        $userinfo = $this->getLoginUserinfo();
+
+        return $userinfo['roles'] ?? [];
+    }
+
+    /**
+     * 获取登录用户角色id
+     * @return mixed
+     */
+    public function getLoginUserRoleIds()
+    {
+        $userinfo = $this->getLoginUserinfo();
+
+        return $userinfo['role_ids'] ?? [];
+    }
+
+    /**
+     * 获取登录用户部门列表
+     * @return array|mixed
+     */
+    public function getLoginUserDepartment()
+    {
+        $userinfo = $this->getLoginUserinfo();
+
+        return $userinfo['department'] ?? [];
     }
 }

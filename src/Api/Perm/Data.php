@@ -3,7 +3,6 @@
 namespace Xc\Auth\Api\Perm;
 
 use Xc\Auth\Units\ApiAbstract;
-use Xc\Auth\Units\Redis;
 
 /**
  * Created by PhpStorm.
