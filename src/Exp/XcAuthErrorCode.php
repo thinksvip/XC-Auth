@@ -11,7 +11,7 @@ namespace Xc\Auth\Exp;
 class XcAuthErrorCode
 {
     // 公共
-    const ERROR_VERIFY_TIP = [100, '提示: '];// 提示
+    const ERROR_VERIFY_TIP = [100, '提示: %s'];// 提示
 
     // 登录 10xxx
     const NO_LOGIN = [10000, '未登录%s'];

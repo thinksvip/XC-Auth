@@ -25,6 +25,10 @@ trait TXcAuth
     {
         $class = '\Xc\Auth\Api\\' . ucfirst($name);
         try {
+            if (!class_exists($class)) {
+                throw new XcAuthException(XcAuthErrorCode::ERROR_VERIFY_TIP, "未定义类($class)");
+            }
+
             $key = md5($class . json_encode($arguments));
             if (empty(self::$objects[$key])) {
                 self::$objects[$key] = new $class($arguments);
@@ -32,7 +36,7 @@ trait TXcAuth
 
             return self::$objects[$key];
         } catch (\Exception $e) {
-            throw new XcAuthException(XcAuthErrorCode::ERROR_VERIFY_TIP, "未定义类($class)");
+            throw new XcAuthException([$e->getCode(), $e->getMessage()]);
         }
     }
 }

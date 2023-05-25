@@ -27,6 +27,10 @@ class Perm extends ApiAbstract
     {
         $class = '\Xc\Auth\Api\Perm\\' . ucfirst($name);
         try {
+            if (!class_exists($class)) {
+                throw new XcAuthException(XcAuthErrorCode::ERROR_VERIFY_TIP, "未定义类($class)");
+            }
+
             $key = md5($class);
             if (empty(self::$perms[$key])) {
                 self::$perms[$key] = new $class();
@@ -34,7 +38,7 @@ class Perm extends ApiAbstract
 
             return self::$perms[$key];
         } catch (\Exception $e) {
-            throw new XcAuthException(XcAuthErrorCode::ERROR_VERIFY_TIP, "未定义类($class)");
+            throw new XcAuthException([$e->getCode(), $e->getMessage()]);
         }
     }
 
