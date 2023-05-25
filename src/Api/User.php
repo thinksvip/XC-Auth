@@ -14,7 +14,7 @@ class User extends ApiAbstract
 {
     protected function init()
     {
-        // TODO: Implement init() method.
+
     }
 
     /**
