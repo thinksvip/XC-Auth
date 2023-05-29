@@ -24,6 +24,8 @@ class TokenStruct
      */
     public $uid;
 
+    public $token;
+
     /**
      * 登录类型
      * @var int|mixed
@@ -32,11 +34,12 @@ class TokenStruct
 
     protected array $params = [];
 
-    public function __construct(array $params)
+    public function __construct(array $params, string $token = '')
     {
         $this->tid = $params['tenant_id'] ?? null;
         $this->uid = $params['user_id'] ?? null;
         $this->loginType = $params['login_type'] ?? 1;
+        $this->token = $token;
 
         if (empty($this->tid) || empty($this->uid)) {
             throw new XcAuthException(XcAuthErrorCode::NO_LOGIN, XcAuthErrorCode::OAUTH_TOKEN_PARSE_ERROR);
@@ -55,11 +58,20 @@ class TokenStruct
     }
 
     /**
+     * 获取用户id Token key
+     * @return string
+     */
+    protected function getUserIdTokenKey()
+    {
+        return sprintf('%s-%s', $this->uid, md5($this->token));
+    }
+
+    /**
      * 获取租户id和用户id
      * @return array
      */
-    public function listTenantIdAndUserId()
+    public function arrayRedisKeyTenantIdUserIdToken()
     {
-        return [$this->tid, $this->uid];
+        return [$this->tid, $this->getUserIdTokenKey()];
     }
 }
