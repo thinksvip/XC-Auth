@@ -20,12 +20,14 @@ abstract class ApiAbstract
 
     protected TokenStruct $ts;// token数据结构
 
+    protected $loginUser;
+
     public function __construct()
     {
         $this->setToken();
 
         $params = JwtAuth::getInstance()->decode($this->token)->getParams();
-        $this->ts = new TokenStruct($params);
+        $this->ts = new TokenStruct($params, $this->token);
     }
 
     /**
