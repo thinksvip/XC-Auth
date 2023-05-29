@@ -23,7 +23,7 @@ class User extends ApiAbstract
      */
     public function getAllUsers()
     {
-        $key = $this->getCrKey('h_users:%s', $this->ts->tid);
+        $key = $this->getCrKey('h_users:%s', [$this->ts->tid]);
         $allUsers = self::redis()->hgetall($key);
         return $allUsers;
     }
@@ -35,7 +35,7 @@ class User extends ApiAbstract
      */
     public function getSingleUser($uid)
     {
-        $key = $this->getCrKey('h_users:%s', $this->ts->tid);
+        $key = $this->getCrKey('h_users:%s', [$this->ts->tid]);
         $user = self::redis()->hget($key, $uid);
         return $user;
     }
