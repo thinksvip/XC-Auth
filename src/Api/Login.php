@@ -119,7 +119,7 @@ class Login extends ApiAbstract
     {
         $userinfo = $this->getLoginUserinfo();
 
-        return $userinfo['roles'] ?? [];
+        return $userinfo['role'] ?? [];
     }
 
     /**
