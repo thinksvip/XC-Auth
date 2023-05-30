@@ -89,22 +89,4 @@ abstract class ApiAbstract
     {
         return Redis::getInstance()->setIsEncryption(true)->setIsGz(false);
     }
-
-    /**
-     * 返回redis对象-json数据
-     * @return Redis
-     */
-    protected static function redisEncry()
-    {
-        return self::redis()->setIsEncryption(true)->setIsGz(false);
-    }
-
-    /**
-     * 返回redis对象-压缩数据
-     * @return Redis
-     */
-    protected static function redisGz()
-    {
-        return self::redisEncry()->setIsEncryption(true)->setIsGz(true);
-    }
 }

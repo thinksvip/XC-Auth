@@ -25,7 +25,7 @@ class Data extends ApiAbstract implements IPerm
     {
         $key = $this->getCrKey('permission:data:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken());
 
-        $data = self::redisGz()->get($key);
+        $data = self::redis()->get($key);
         return $data;
     }
 }
