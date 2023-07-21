@@ -14,7 +14,7 @@ class XcAuthErrorCode
     const ERROR_VERIFY_TIP = [100, '提示: %s'];// 提示
 
     // 登录 10xxx
-    const NO_LOGIN = [10000, '未登录%s'];
+    const NO_LOGIN = [401, '未登录%s'];
 
     // 验证 40xxx
     const OAUTH_SIGNATURE_INVALID = [40100, 'token验证失败'];
