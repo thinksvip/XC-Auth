@@ -26,7 +26,7 @@ class Login extends ApiAbstract
      */
     public function isLogin(): bool
     {
-        $key = $this->getCrKey('user:login_status:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken());
+        $key = $this->getCrKey('user:login_status:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken(true));
 
         $value = self::redis()->get($key);
 
@@ -46,7 +46,7 @@ class Login extends ApiAbstract
     public function getLoginUserinfo()
     {
         if (empty($this->loginUser)) {
-            $key = $this->getCrKey('user:access_token:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken());
+            $key = $this->getCrKey('user:access_token:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken(true));
             $this->loginUser = self::redis()->get($key);
         }
 

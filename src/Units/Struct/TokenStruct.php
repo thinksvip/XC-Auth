@@ -59,19 +59,24 @@ class TokenStruct
 
     /**
      * 获取用户id Token key
+     * @param bool $incToken
      * @return string
      */
-    protected function getUserIdTokenKey()
+    protected function getUserIdTokenKey(bool $incToken = false)
     {
+        if (!$incToken) {
+            return sprintf('%s', $this->uid);
+        }
         return sprintf('%s-%s', $this->uid, md5($this->token));
     }
 
     /**
      * 获取租户id和用户id
+     * @param bool $incToken
      * @return array
      */
-    public function arrayRedisKeyTenantIdUserIdToken()
+    public function arrayRedisKeyTenantIdUserIdToken(bool $incToken = false)
     {
-        return [$this->tid, $this->getUserIdTokenKey()];
+        return [$this->tid, $this->getUserIdTokenKey($incToken)];
     }
 }
