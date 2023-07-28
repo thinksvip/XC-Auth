@@ -47,6 +47,7 @@ class Login extends ApiAbstract
     {
         if (empty($this->loginUser)) {
             $key = $this->getCrKey('tenant:userinfo:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken());
+
             $this->loginUser = self::redis()->get($key);
         }
 
