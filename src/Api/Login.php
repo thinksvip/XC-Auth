@@ -46,7 +46,7 @@ class Login extends ApiAbstract
     public function getLoginUserinfo()
     {
         if (empty($this->loginUser)) {
-            $key = $this->getCrKey('user:access_token:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken(true));
+            $key = $this->getCrKey('auth:tenant:userinfo:%s:%s', $this->ts->arrayRedisKeyTenantIdUserIdToken());
             $this->loginUser = self::redis()->get($key);
         }
 
